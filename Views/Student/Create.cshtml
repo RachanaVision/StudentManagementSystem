@@ -1,0 +1,84 @@
+﻿<form id="studentForm">
+    <div class="form-horizontal">
+        <div class="">
+            <label class="col-md-1">Name: </label>
+            <input type="text" class="form-control d-inline" id="Name" required/>
+        </div>
+
+        <div class="" style="padding-top:10px">
+            <label class="col-md-1">Address: </label>
+            <input type="text" class="form-control d-inline" id="Address" required />
+        </div>
+
+        <div class="" style="padding-top:10px">
+            <label class="col-md-1">Standard: </label>
+            <select class="form-control d-inline" id="Standard">
+                <option value="0">--------------- Select ---------------</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+
+        <div class="" style="padding-top:10px">
+            <label class="col-md-1">Age: </label>
+            <input type="number" class="form-control d-inline" id="Age" />
+        </div>
+
+        <div class="" style="padding-top:10px">
+            <label class="col-md-1">Hobby: </label>
+            <input type="checkbox" value="Dancing" class="d-inline" name="Hobby"/> Dancing
+            <input type="checkbox" value="Reading" class="d-inline" name="Hobby"/> Reading
+            <input type="checkbox" value="Cooking" class="d-inline" name="Hobby"/> Cooking
+            <input type="checkbox" value="Music" class="d-inline" name="Hobby"/> Music
+            <input type="hidden" id="Hobbies" name="Hobby" />
+        </div>
+
+        <div class="" style="padding-top:10px">
+            <label class="col-md-1">Gender: </label>
+            <input type="radio" id="Male" class="d-inline" name="Gender" value="Male" /> Male  &nbsp;&nbsp;
+            <input type="radio" id="Female" name="Gender" value="Female"/> Female
+            <input type="hidden" id="SGender" name="Gender" />
+        </div>
+
+        <div class="" style="padding-top:10px">
+            <label class="col-md-1">State: </label>
+            <select class="form-control d-inline" id="State" onchange="GetCityByState(this.value)"></select>                  
+            <input type="hidden" id="SState" />
+        </div>
+
+        <div class="" style="padding-top:10px">
+            <label class="col-md-1">City: </label>
+            <select class="form-control d-inline" id="City"></select>        
+            <input type="hidden" id="SCity" />
+        </div>
+
+        <div class="" style="padding-top:10px">
+            <label class="col-md-1">Pincode: </label>
+            <input type="number" maxlength="6" class="form-control d-inline" id="Pincode" />
+        </div>
+
+        <div style="padding-top:10px;padding-left:98px">
+            <input type="Submit" value="Submit" onclick="InsertRecord()" class="btn btn-default btn-success d-inline"/>
+            <input type="button" value="Cancel" class="btn btn-default btn-danger" id="btnCancel"/>                        
+        </div>
+    </div>
+</form>
+
+<div id="DisplayInsertedData" style="padding-left:98px; padding-top:20px">
+   
+</div>
+
+<script src="~/Scripts/Student.js"></script>
+<script>
+    $(document).ready(function () {
+        GetStates()
+    })
+</script>
