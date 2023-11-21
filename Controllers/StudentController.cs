@@ -20,6 +20,12 @@ namespace StudentManagementSystem.Controllers
             return View();
         }
         
+        public ActionResult GetAllData(int pageNumber, int pageSize)
+        {
+            var pagedData = studentDL.GetAllStudents();
+            return Json(pagedData, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GetAllRecords()
         {
             var list = studentDL.GetAllStudents();
@@ -55,7 +61,13 @@ namespace StudentManagementSystem.Controllers
         {
             studentDL.DeleteRecord(id);           
             return RedirectToAction("Index");
-        }       
+        }
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var student = studentDL.GetStudentById(id);
+            return View("Edit", student);
+        }
 
     }
 }

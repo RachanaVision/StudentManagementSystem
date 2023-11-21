@@ -1,6 +1,47 @@
 ﻿$(document).ready(function () {
-    GetAllRecord()
+   // debugger;
+   
+    //var pages = 10; 
+    //var pageIndex = 0; 
+    //var _incallback = false;
+    //$(window).on("scroll",function () {
+
+    //    var hT = $('#status').offset().top,
+    //        hH = $('#status').outerHeight(),
+    //        wH = $(window).height(),
+    //        wS = $(window).scrollTop();
+    //    // don't do it if we have reached last page OR we are still grabbing items
+    //    if (pages >= pageIndex && !_incallback) {
+    //        if (wS > (hT + hH - wH)) {
+    //            LoadData();
+    //        }
+    //    }
+    //});
+
 })
+
+function LoadData() {
+
+    debugger;
+    var page = 0;
+    var _incallback = false;
+
+    if (page > -1 && !_incallback) {
+        _incallback = true;
+        page++;
+        //debugger;
+        $.get("/Student/GetAllRecords" + page, function (data) {
+            if (data != "") {
+                $('#status').append(data);
+            }
+            else {
+                page = -1;
+            }
+            _incallback = false;
+            $('#status').empty();
+        });
+    }
+}
 
 function GetCityByState(sid) {
 
@@ -35,6 +76,10 @@ $('#btnAddRecord').on('click', function () {
     window.location.href = "/Student/Create"
 })
 
+$('#btnBacktoRecords').on('click', function () {
+    window.location.href = "/Student/Index"
+})
+
 $('#btnCancel').on('click', function () {
     ClearControls();
     $('#DisplayInsertedData').empty();
@@ -59,7 +104,7 @@ function GetAllRecord() {
                     "<td>" + studentlist[i].StateId + "</td>" +
                     "<td>" + studentlist[i].CityId + "</td>" +
                     "<td>" + studentlist[i].Pincode + "</td>" +
-                    "<td>" + "<input type='button' class='btn btn-default btn-info' value='EDIT' onclick=addeditrecord(" + studentlist[i].Id + ")>" + "</td>" +
+                    "<td>" + "<input type='button' class='btn btn-default btn-info' value='EDIT' onclick=GetStudentById(" + studentlist[i].Id + ")>" + "</td>" +
                     "<td>" + "<input type='button' value='DELETE' class='btn btn-default btn-danger' onclick=DeleteRecord(" + studentlist[i].Id + ")>" + "</td>" +
                     "</tr>";
                 setdata.append(data);
@@ -188,5 +233,90 @@ function InsertedData() {
     document.getElementById("DisplayInsertedData").innerHTML = displayText;    
 }
 
+$('#studentForm').validate({
+    submitHandler: function (form) {
+        var hobby = [];
+        $('input[type=checkbox]:checked').each(function () {
+            hobby.push($(this).val());
+        });
+        hobby.join(",");
+        $('#Hobbies').val(hobby);
+
+        var gender = "";
+        gender = $('input[type=radio]:checked').val()
+        $('#SGender').val(gender);
+
+        var formdata = new FormData();
+        formdata.append('Name', $('#Name').val());
+        formdata.append('Address', $('#Address').val());
+        formdata.append('Standard', $('#Standard').val());
+        formdata.append('Age', $('#Age').val());
+        formdata.append('Hobby', $('#Hobbies').val());
+        formdata.append('Gender', $('#SGender').val());
+        formdata.append('StateId', $('#SState').val());
+        formdata.append('CityId', $('#SCity').val());
+        formdata.append('Pincode', $('#Pincode').val());
+        $.ajax({
+            url: '/Student/Create',
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            data: formdata,
+            success: function () {
+                InsertedData()
+                //ClearControls()
+            },
+            error: function (msg) {
+                alert(msg.responseText);
+            }
+        })
+    }
+})
+
+function GetStudentById1(id) {
+    $.ajax({
+        url: '/Student/Edit?id=' + id,
+        type: 'GET',
+        contentType: "application/json;charset=UTF-8",
+        success: function (student) {
+
+           // debugger;
+            console.log(student)
+            //if (id != 0) {
+
+            //    $('#Id').val(student.Id);
+            //    $('#Name').val(student.Name);
+            //    $('#Address').val(student.Address);
+            //    $('#Standard').val(student.Standard);
+            //    $('#Age').val(student.Age);
+            //    if (student.Gender == "Male") {
+            //        $('#Male').prop("checked", true);
+            //    }
+            //    else {
+            //        $('#Female').prop("checked", true);
+            //    }
 
 
+            //    $('#State').val(student.StateId);
+            //    $('#City').val(student.CityId);
+            //    $('#Pincode').val(student.Pincode);
+
+            //    $('#Hobbies').val(student.Hobby);
+            //    var hobby = $('#Hobbies').val();
+            //    $("input[type=checkbox]").each(function () {
+            //        if (hobby.includes($(this).val())) {
+            //            $(this).prop("checked", true);
+            //        }
+            //    })
+            //    debugger;
+            //}
+
+            $('#StudentRecord').html(student)
+           // debugger;
+        }
+    })
+}
+
+function GetStudentById(id) {
+    window.location.href = '/Student/Edit/' + id;
+}

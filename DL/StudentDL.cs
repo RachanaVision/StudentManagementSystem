@@ -40,5 +40,11 @@ namespace StudentManagementSystem.DL
             db.Students.Remove(student);
             db.SaveChanges();
         }
+
+        public Student GetStudentById(int id) 
+        {
+            Student student = db.Students.Find(id);
+            return student;
+        }
     }
 }

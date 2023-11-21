@@ -1,4 +1,5 @@
-﻿<input type="button" class="btn btn-default btn-primary" value="ADD RECORD" id="btnAddRecord" /><br />
+﻿<input type="button" class="btn btn-default btn-primary" value="Add Record" id="btnAddRecord" />
+<br />
 <table class="table">
     <thead>
         <tr>
@@ -20,4 +21,55 @@
     </tbody>
 </table>
 
-<script src="~/Scripts/Student.js"></script>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        
+        var pageNumber = 0;
+        var pageSize = 10;
+        loadData();
+
+        $(window).on('scroll', function () {
+            loadData();
+        });
+
+        function loadData() {
+            var windowHeight = $(window).height();
+            var documentHeight = $(document).height();
+            var scrollTop = $(window).scrollTop();
+           
+            if (scrollTop + windowHeight >= documentHeight) {
+                pageNumber++;
+                $.ajax({
+                    url: '/Student/GetAllData',
+                    type: 'GET',
+                    data: { pageNumber: pageNumber, pageSize: pageSize },
+                    success: function (data) {
+
+                        data.forEach(function (student) {
+
+                            var newRow = '<tr>' +
+                                '<td>' + student.Name + '</td>' +
+                                '<td>' + student.Address + '</td>' +
+                                '<td>' + student.Standard + '</td>' +
+                                '<td>' + student.Age + '</td>' +
+                                '<td>' + student.Hobby + '</td>' +
+                                '<td>' + student.Gender + '</td>' +
+                                '<td>' + student.StateId + '</td>' +
+                                '<td>' + student.CityId + '</td>' +
+                                '<td>' + student.Pincode + '</td>' +
+                                '</tr>';
+
+                            $('#setstudent').append(newRow);
+                            
+                        });
+                    },
+                    error: function () {
+                        console.log("Error");
+                    }
+                });
+            }
+        }       
+    });
+</script>

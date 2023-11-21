@@ -1,18 +1,22 @@
-﻿<form id="studentForm">
+﻿
+<form id="studentForm">
     <div class="form-horizontal">
         <div class="">
             <label class="col-md-1">Name: </label>
-            <input type="text" class="form-control d-inline" id="Name" required/>
+            <input type="text" class="form-control d-inline" id="Name" required />
+            <div style="padding-left:590px" class="d-inline">
+                <input type="button" value="Back to Records" class="btn btn-default btn-info" id="btnBacktoRecords" />
+            </div>
         </div>
 
         <div class="" style="padding-top:10px">
             <label class="col-md-1">Address: </label>
-            <input type="text" class="form-control d-inline" id="Address" required />
+            <input type="text" class="form-control d-inline" id="Address" required/>
         </div>
 
         <div class="" style="padding-top:10px">
             <label class="col-md-1">Standard: </label>
-            <select class="form-control d-inline" id="Standard">
+            <select class="form-control d-inline" id="Standard" required>
                 <option value="0">--------------- Select ---------------</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -29,7 +33,7 @@
 
         <div class="" style="padding-top:10px">
             <label class="col-md-1">Age: </label>
-            <input type="number" class="form-control d-inline" id="Age" />
+            <input type="number" class="form-control d-inline" id="Age" required />
         </div>
 
         <div class="" style="padding-top:10px">
@@ -62,11 +66,11 @@
 
         <div class="" style="padding-top:10px">
             <label class="col-md-1">Pincode: </label>
-            <input type="number" maxlength="6" class="form-control d-inline" id="Pincode" />
+            <input type="number" maxlength="6" class="form-control d-inline" id="Pincode" required />
         </div>
 
         <div style="padding-top:10px;padding-left:98px">
-            <input type="Submit" value="Submit" onclick="InsertRecord()" class="btn btn-default btn-success d-inline"/>
+            <input type="Submit" value="Submit" class="btn btn-default btn-success d-inline"/>
             <input type="button" value="Cancel" class="btn btn-default btn-danger" id="btnCancel"/>                        
         </div>
     </div>
